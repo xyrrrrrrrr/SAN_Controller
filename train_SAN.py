@@ -129,7 +129,7 @@ if __name__ == '__main__':
     discrete_action_n = 11
     h_size = 24
     my_buffer = ReplayBuffer(replay_buffer_size)
-    my_buffer.load('./buffer/buffer_{}_{}.pkl'.format(ENV_NAME, SEED))
+    my_buffer.load('buffer_{}_{}.pkl'.format(ENV_NAME, SEED))
 
     # Create model
     extractor = ExtractNet(input_n, discrete_action_n, h_size=h_size).to(device)

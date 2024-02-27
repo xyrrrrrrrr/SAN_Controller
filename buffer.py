@@ -55,7 +55,7 @@ class ReplayBuffer(object):
 
         used to load the replay buffer from a file
         '''
-        file_name = "buffer/" + file_name
+        file_name = "./buffer/" + file_name
 
         with open(file_name, 'rb') as f:
             self.buffer = pickle.load(f)
