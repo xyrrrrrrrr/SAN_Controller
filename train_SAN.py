@@ -115,7 +115,7 @@ def train_san(san, extractor, my_buffer, batch_size, device, epochs, optimizer)-
 
     
 if __name__ == '__main__':
-    # Hyperparameters
+    # Hyper parameters
     replay_buffer_size = 3000
     batch_size = 32
     learning_rate = 0.001
