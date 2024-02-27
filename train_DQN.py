@@ -197,7 +197,7 @@ def train(num_frames, DQN, multi_step=1):
         t_episode_start = time.process_time()
         epsilon = epsilon_by_frame(frame_idx)
         action = current_model.act(state, epsilon, device, discrete_action_n)
-        now_Q = maxQ(current_model, state) 
+        now_Q = maxQ(current_model, state)
         max_Qs.append(now_Q)
         if not isinstance(env.action_space, gym.spaces.discrete.Discrete):
             next_state, reward, done, _ = env.step(np.array([faction(action)]))
