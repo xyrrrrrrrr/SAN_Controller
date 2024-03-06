@@ -50,17 +50,6 @@ def evaluation(current_model):
 
     return r
 
-
-def plot_reward(rewards, title, y_lim, fig_size = (10, 5)):
-    plt.figure(figsize = fig_size)
-    # 设置y轴的范围
-    plt.ylim(y_lim, 0)
-    plt.plot(rewards)
-    plt.title(title)
-    plt.savefig("./fig/" + title + '.png')
-    plt.close()
-
-
 def compare_different_models(standard_agent, compare_agent):
     standard_agent.eval()
     compare_agent.eval()

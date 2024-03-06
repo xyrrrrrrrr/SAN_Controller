@@ -15,15 +15,7 @@ import matplotlib.pyplot as plt
 
 from agent import DQN, ExtractNet
 from buffer import ReplayBuffer
-
-
-def plot_loss(x, losses):
-    plt.ylabel('loss')
-    plt.xlabel('epoch')
-    plt.title('Extractor Loss')
-    plt.plot(x, losses, linewidth = 1)
-    plt.savefig('./fig/Extractor_Loss.png')
-
+from tool import plot_loss
 
 def extract_from_current_model(extractor, mybuffer, batch_size, device, epochs, optimizer):
     buffer_size = len(mybuffer)
@@ -50,7 +42,6 @@ def extract_from_current_model(extractor, mybuffer, batch_size, device, epochs, 
         next_q_value = next_q_values.gather(1, action).squeeze(1)
         gamma = 0.98
         # calculate expected q value according to bellman equation
-        expected_q_value = reward + gamma * next_q_value * (1 - done)
         # next_q_values = current_model(next_state)
         # action = torch.max(next_q_values, 1)[1].unsqueeze(1)
         # next_q_value = next_q_values.gather(1, action).squeeze(1)
@@ -70,10 +61,7 @@ def extract_from_current_model(extractor, mybuffer, batch_size, device, epochs, 
             counter = 0
             print('Epoch: {}, Loss: {}'.format(epoch, loss.item()))
 
-    plot_loss(x, losses)
-
-    
-
+    plot_loss(x, losses, 'Extractor_Loss')
 
 
 if __name__ == '__main__':
