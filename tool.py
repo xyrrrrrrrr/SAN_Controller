@@ -87,10 +87,11 @@ def compare_result(rewards, labels, use_max = False, smooth = 0.9, eval_step = 2
     plt.savefig('{}.png'.format(filename))
     plt.show()
 
-def plot_reward(rewards, title, y_lim, fig_size = (10, 5)):
+def plot_reward(rewards, title, y_lim = None, fig_size = (10, 5)):
     plt.figure(figsize = fig_size)
     # 设置y轴的范围
-    plt.ylim(y_lim, 0)
+    if y_lim:
+        plt.ylim(y_lim, 0)
     plt.plot(rewards)
     plt.title(title)
     plt.savefig("./fig/" + title + '.png')

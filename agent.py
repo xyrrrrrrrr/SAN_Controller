@@ -80,6 +80,7 @@ class ExtractNet(DQNBase):
     def forward(self, x):
         normalize_state(x)
         x = self.fc(x)
+
         return x
  
 
@@ -123,3 +124,49 @@ class SANController(nn.Module):
         x = self.decoder(z)
         
         return x
+
+
+class IdentifyNet(nn.Module):
+    def __init__(self, input_n, output_n):
+        super(IdentifyNet, self).__init__()
+        self.input_n = input_n
+        self.output_n = output_n
+
+        self.linear = nn.Linear(self.input_n, self.output_n)
+
+    def forward(self, x):
+        x = self.linear(x)
+
+        return x
+    
+    def get_params(self):
+        weight = self.linear.weight
+        bias = self.linear.bias
+
+        return weight, bias
+    
+
+class SANExtractor(DQNBase):
+    def __init__(self, input_n, num_actions, h_size=24):
+        super(SANExtractor, self).__init__()
+
+        self.input_n = input_n
+        self.num_actions = num_actions
+
+        self._extractor = ExtractNet(input_n, num_actions)
+        self._SANController = SANController(input_n, input_n)
+
+    def forward(self, x):
+        noise = self._SANController(x)
+        # normalize noise with L2 norm
+        noise = noise / (100 * noise.norm(dim=-1, keepdim=True) )
+        x = self._extractor(x + noise)
+
+        return x
+
+
+    def load_weights(self, weights):
+        assert type(weights) == dict, 'weights should be a dict'
+        self._extractor.load_state_dict(torch.load(weights['extractor']))
+        self._SANController.load_state_dict(torch.load(weights['SANController']))
+

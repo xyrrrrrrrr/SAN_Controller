@@ -13,7 +13,7 @@ import torch
 from tqdm import tqdm
 
 from agent import DQN, ExtractNet
-
+from tool import plot_reward
 
 def set_env(env_id):
     global env, env1, discrete_action_n, input_n, faction
